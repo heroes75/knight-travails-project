@@ -18,16 +18,18 @@ class Graph {
     }
 
     buildGraph(value, value1) {
-        this.root = this.createNode([9,9], value, value1)
+        this.root = this.createNode([[9,9]], value, value1)
     }
 
-    createNode(prev = [9,9], value, value1) {
+    createNode(prev, value, value1) {
         console.log("herre starat tg recusrsion");
         
-        console.log({prev, value});
+        console.log([prev[prev.length - 2 < 0 ? prev.length - 1 :  prev.length - 2][0], 
+            prev[prev.length - 2 < 0 ? prev.length - 1 :  prev.length - 2][1]], 
+            value);
         if(value[0] < 0 || value[1] < 0 || value[0] > 7 || value[1] > 7) return null
-        if((value[0] === value1[0] && value[1] === prev[1]) || (value[0] === prev[0] && value[1] === prev[1])) return new Node(value)
-        let node = new Node(value);
+        if((value[0] === value1[0] && value[1] === value1[1]) || (value[0] === prev[prev.length - 2 < 0 ? prev.length - 1 :  prev.length - 2][0] && value[1] === prev[prev.length - 2 < 0 ? prev.length - 1 :  prev.length - 2][1])) return new Node(value)
+        //let node = new Node(value);
         
         // two moves left and one move down or left
         /*node.one = ((value[0] + 2 < 8) && (value[1] + 1 < 8)) ? this.createNode([value[0] + 2, value[1] + 1], value1) : null;
@@ -83,9 +85,8 @@ class Graph {
         } else {
             node.eight = null
         }*/
-        console.log(node);
         
-        prev = value
+        prev.push(value) 
         
         console.log({prev}, [value[0] + 2, value[1] + 1]);
         console.log({prev}, [value[0] + 2, value[1] - 1]);
@@ -105,6 +106,7 @@ class Graph {
             this.createNode(prev, [value[0] + 1, value[1] - 2], value1),
             this.createNode(prev, [value[0] - 1, value[1] - 2], value1),
         )
+        console.log({root});
         return root
     }
 }
@@ -116,4 +118,4 @@ let a = [1,1]
 let b = [1,1]
 console.log( a[0] === b[0] && a[1] === b[1]);
 
-console.log(graph.root);
+console.log("graph.root)", graph.root);
