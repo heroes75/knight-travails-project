@@ -1,5 +1,5 @@
 class Node {
-    constructor(value, one = null, two = null, three = null, four = null, five = null, six = null, seven = null, eight = null) {
+    constructor(value, one = null, two = null, three = null, four = null, five = null, six = null, seven = null) {
         this.value = value;
         this.one = one;
         this.two = two;
@@ -8,7 +8,7 @@ class Node {
         this.five= five;
         this.six = six;
         this.seven = seven;
-        this.eight= eight;
+        //this.eight= eight;
     }
 }
 
@@ -18,17 +18,16 @@ class Graph {
     }
 
     buildGraph(value, value1) {
-        this.root = this.createNode([[9,9]], value, value1)
+        this.root = this.createNode([[9,9]], value, value1, [])
     }
 
-    createNode(prev, value, value1) {
+    createNode(prev, value, value1, all) {
         console.log("herre starat tg recusrsion");
         
-        console.log([prev[prev.length - 2 < 0 ? prev.length - 1 :  prev.length - 2][0], 
-            prev[prev.length - 2 < 0 ? prev.length - 1 :  prev.length - 2][1]], 
-            value);
+        console.log({prev, value});
+        
         if(value[0] < 0 || value[1] < 0 || value[0] > 7 || value[1] > 7) return null
-        if((value[0] === value1[0] && value[1] === value1[1]) || (value[0] === prev[prev.length - 2 < 0 ? prev.length - 1 :  prev.length - 2][0] && value[1] === prev[prev.length - 2 < 0 ? prev.length - 1 :  prev.length - 2][1])) return new Node(value)
+        if(((value[0] === value1[0]) || (value[1] === value1[1]))) return new Node(value)
         //let node = new Node(value);
         
         // two moves left and one move down or left
@@ -86,25 +85,39 @@ class Graph {
             node.eight = null
         }*/
         
-        prev.push(value) 
+        const arrayOfValues = [
+            [value[0] + 2, value[1] + 1],
+            [value[0] + 2, value[1] - 1],
+            [value[0] - 2, value[1] + 1],
+            [value[0] - 2, value[1] - 1],
+            [value[0] + 1, value[1] + 2],
+            [value[0] - 1, value[1] + 2],
+            [value[0] + 1, value[1] - 2],
+            [value[0] - 1, value[1] - 2],
+        ]
+
+        const arrayOfValuesFilter = arrayOfValues.filter(el => ((el[0] !== prev[0]) || (el[1] !== prev[1])));
+        console.log({all, arrayOfValuesFilter, arrayOfValues, prev, value});
         
-        console.log({prev}, [value[0] + 2, value[1] + 1]);
-        console.log({prev}, [value[0] + 2, value[1] - 1]);
-        console.log({prev}, [value[0] - 2, value[1] + 1]);
-        console.log({prev}, [value[0] - 2, value[1] - 1]);
-        console.log({prev}, [value[0] + 1, value[1] + 2]);
-        console.log({prev}, [value[0] - 1, value[1] + 2]);
-        console.log({prev}, [value[0] + 1, value[1] - 2]);
-        console.log({prev}, [value[0] - 1, value[1] - 2]);
+        
+        prev = value;
+        all.push(value)
+        //console.log({prev}, [value[0] + 2, value[1] + 1]);
+        //console.log({prev}, [value[0] + 2, value[1] - 1]);
+        //console.log({prev}, [value[0] - 2, value[1] + 1]);
+        //console.log({prev}, [value[0] - 2, value[1] - 1]);
+        //console.log({prev}, [value[0] + 1, value[1] + 2]);
+        //console.log({prev}, [value[0] - 1, value[1] + 2]);
+        //console.log({prev}, [value[0] + 1, value[1] - 2]);
+        //console.log({prev}, [value[0] - 1, value[1] - 2]);
         let root = new Node(value, 
-            this.createNode(prev, [value[0] + 2, value[1] + 1], value1),
-            this.createNode(prev, [value[0] + 2, value[1] - 1], value1),
-            this.createNode(prev, [value[0] - 2, value[1] + 1], value1),
-            this.createNode(prev, [value[0] - 2, value[1] - 1], value1),
-            this.createNode(prev, [value[0] + 1, value[1] + 2], value1),
-            this.createNode(prev, [value[0] - 1, value[1] + 2], value1),
-            this.createNode(prev, [value[0] + 1, value[1] - 2], value1),
-            this.createNode(prev, [value[0] - 1, value[1] - 2], value1),
+            this.createNode(prev, arrayOfValuesFilter[0], value1, all),
+            this.createNode(prev, arrayOfValuesFilter[1], value1, all),
+            this.createNode(prev, arrayOfValuesFilter[2], value1, all),
+            this.createNode(prev, arrayOfValuesFilter[3], value1, all),
+            this.createNode(prev, arrayOfValuesFilter[4], value1, all),
+            this.createNode(prev, arrayOfValuesFilter[5], value1, all),
+            this.createNode(prev, arrayOfValuesFilter[6], value1, all),
         )
         console.log({root});
         return root
