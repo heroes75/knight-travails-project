@@ -96,7 +96,14 @@ class Graph {
             [value[0] - 1, value[1] - 2],
         ]
 
-        const arrayOfValuesFilter = arrayOfValues.filter(el => ((el[0] !== prev[0]) || (el[1] !== prev[1])));
+        const arrayOfValuesFilter = arrayOfValues.filter(el => {
+            if(all.length === 0) return true
+            let isIn = true;
+            all.forEach(prev => {
+                isIn = isIn && ((el[0] !== prev[0]) || (el[1] !== prev[1]));
+            });
+            return isIn
+        });
         console.log({all, arrayOfValuesFilter, arrayOfValues, prev, value});
         
         
@@ -111,17 +118,19 @@ class Graph {
         //console.log({prev}, [value[0] + 1, value[1] - 2]);
         //console.log({prev}, [value[0] - 1, value[1] - 2]);
         let root = new Node(value, 
-            this.createNode(prev, arrayOfValuesFilter[0], value1, all),
-            this.createNode(prev, arrayOfValuesFilter[1], value1, all),
-            this.createNode(prev, arrayOfValuesFilter[2], value1, all),
-            this.createNode(prev, arrayOfValuesFilter[3], value1, all),
-            this.createNode(prev, arrayOfValuesFilter[4], value1, all),
-            this.createNode(prev, arrayOfValuesFilter[5], value1, all),
-            this.createNode(prev, arrayOfValuesFilter[6], value1, all),
+            arrayOfValuesFilter.length >= 1 ? this.createNode(prev, arrayOfValuesFilter[0], value1, all) : null,
+            arrayOfValuesFilter.length >= 2 ? this.createNode(prev, arrayOfValuesFilter[1], value1, all) : null,
+            arrayOfValuesFilter.length >= 3 ? this.createNode(prev, arrayOfValuesFilter[2], value1, all) : null,
+            arrayOfValuesFilter.length >= 4 ? this.createNode(prev, arrayOfValuesFilter[3], value1, all) : null,
+            arrayOfValuesFilter.length >= 5 ? this.createNode(prev, arrayOfValuesFilter[4], value1, all) : null,
+            arrayOfValuesFilter.length >= 6 ? this.createNode(prev, arrayOfValuesFilter[5], value1, all) : null,
+            arrayOfValuesFilter.length >= 7 ? this.createNode(prev, arrayOfValuesFilter[6], value1, all) : null,
         )
         console.log({root});
         return root
     }
+
+
 }
 
 let graph = new Graph()
@@ -131,4 +140,4 @@ let a = [1,1]
 let b = [1,1]
 console.log( a[0] === b[0] && a[1] === b[1]);
 
-console.log("graph.root)", graph.root);
+console.log("graph.root)", graph.root.one);
