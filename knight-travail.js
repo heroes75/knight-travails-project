@@ -27,7 +27,7 @@ class Graph {
         console.log({prev, value});
         
         if(value[0] < 0 || value[1] < 0 || value[0] > 7 || value[1] > 7) return null
-        if(((value[0] === value1[0]) || (value[1] === value1[1]))) return new Node(value)
+        if((value[0] === value1[0]) && (value[1] === value1[1])) return new Node(value)
         //let node = new Node(value);
         
         // two moves left and one move down or left
@@ -99,16 +99,16 @@ class Graph {
         const arrayOfValuesFilter = arrayOfValues.filter(el => {
             if(all.length === 0) return true
             let isIn = true;
-            all.forEach(prev => {
-                isIn = isIn && ((el[0] !== prev[0]) || (el[1] !== prev[1]));
+            all.forEach(prevs => {
+                isIn = isIn && ((el[0] !== prevs[0]) || (el[1] !== prevs[1]));
             });
             return isIn
         });
         console.log({all, arrayOfValuesFilter, arrayOfValues, prev, value});
         
         
-        prev = value;
         all.push(value)
+        prev = value;
         //console.log({prev}, [value[0] + 2, value[1] + 1]);
         //console.log({prev}, [value[0] + 2, value[1] - 1]);
         //console.log({prev}, [value[0] - 2, value[1] + 1]);
@@ -126,7 +126,8 @@ class Graph {
             arrayOfValuesFilter.length >= 6 ? this.createNode(prev, arrayOfValuesFilter[5], value1, all) : null,
             arrayOfValuesFilter.length >= 7 ? this.createNode(prev, arrayOfValuesFilter[6], value1, all) : null,
         )
-        console.log({root});
+        console.log(root.value);
+        all = []
         return root
     }
 
@@ -135,9 +136,9 @@ class Graph {
 
 let graph = new Graph()
 
-graph.buildGraph([0,0], [1,2])
+graph.buildGraph([0,0], [7,7])
 let a = [1,1]
 let b = [1,1]
-console.log( a[0] === b[0] && a[1] === b[1]);
+console.log(a[0] === b[0] && a[1] === b[1]);
 
-console.log("graph.root)", graph.root.one);
+console.log("graph.root)", graph.root);
