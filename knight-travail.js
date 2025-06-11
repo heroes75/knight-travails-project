@@ -24,6 +24,7 @@ class Graph {
     createNode(prev, value, value1, all) {
         console.log("herre starat tg recusrsion");
         
+        console.log(all);
         console.log({prev, value});
         
         if(value[0] < 0 || value[1] < 0 || value[0] > 7 || value[1] > 7) return null
@@ -104,10 +105,24 @@ class Graph {
             });
             return isIn
         });
-        console.log({all, arrayOfValuesFilter, arrayOfValues, prev, value});
+        console.log(all.map(el => el.join()).join("||"), {arrayOfValuesFilter, arrayOfValues, prev, value});
         
+        for (let i = 0; i < arrayOfValuesFilter.length; i++) {
+            console.log(arrayOfValuesFilter[i]);
+            
+            
+        }
         
-        all.push(value)
+        if(!all.includes(value)) all.push(value);
+        const all1 = all
+        const all2 = all
+        const all3 = all
+        const all4 = all
+        const all5 = all
+        const all6 = all
+        const all7 = all
+        console.log(all.length, all2.length, all3.length, all4.length, all5.length, all6.length, all7.length);
+        
         prev = value;
         //console.log({prev}, [value[0] + 2, value[1] + 1]);
         //console.log({prev}, [value[0] + 2, value[1] - 1]);
@@ -118,16 +133,15 @@ class Graph {
         //console.log({prev}, [value[0] + 1, value[1] - 2]);
         //console.log({prev}, [value[0] - 1, value[1] - 2]);
         let root = new Node(value, 
-            arrayOfValuesFilter.length >= 1 ? this.createNode(prev, arrayOfValuesFilter[0], value1, all) : null,
-            arrayOfValuesFilter.length >= 2 ? this.createNode(prev, arrayOfValuesFilter[1], value1, all) : null,
-            arrayOfValuesFilter.length >= 3 ? this.createNode(prev, arrayOfValuesFilter[2], value1, all) : null,
-            arrayOfValuesFilter.length >= 4 ? this.createNode(prev, arrayOfValuesFilter[3], value1, all) : null,
-            arrayOfValuesFilter.length >= 5 ? this.createNode(prev, arrayOfValuesFilter[4], value1, all) : null,
-            arrayOfValuesFilter.length >= 6 ? this.createNode(prev, arrayOfValuesFilter[5], value1, all) : null,
-            arrayOfValuesFilter.length >= 7 ? this.createNode(prev, arrayOfValuesFilter[6], value1, all) : null,
+            arrayOfValuesFilter.length >= 1 ? this.createNode(prev, arrayOfValuesFilter[0], value1, Array.from(new Set(all1))) : null,
+            arrayOfValuesFilter.length >= 2 ? this.createNode(prev, arrayOfValuesFilter[1], value1, Array.from(new Set(all2))) : null,
+            arrayOfValuesFilter.length >= 3 ? this.createNode(prev, arrayOfValuesFilter[2], value1, Array.from(new Set(all3))) : null,
+            arrayOfValuesFilter.length >= 4 ? this.createNode(prev, arrayOfValuesFilter[3], value1, Array.from(new Set(all4))) : null,
+            arrayOfValuesFilter.length >= 5 ? this.createNode(prev, arrayOfValuesFilter[4], value1, Array.from(new Set(all5))) : null,
+            arrayOfValuesFilter.length >= 6 ? this.createNode(prev, arrayOfValuesFilter[5], value1, Array.from(new Set(all6))) : null,
+            arrayOfValuesFilter.length >= 7 ? this.createNode(prev, arrayOfValuesFilter[6], value1, Array.from(new Set(all7))) : null,
         )
         console.log(root.value);
-        all = []
         return root
     }
 
