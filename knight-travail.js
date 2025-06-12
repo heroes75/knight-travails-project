@@ -103,9 +103,8 @@ class Graph {
 
 let graph = new Graph()
 
-//graph.buildGraph([0,0], [7,7])
+graph.buildGraph([0,0], [7,7])
 let a = [1,1]
 let b = [1,1]
 console.log(a[0] === b[0] && a[1] === b[1]);
-graph.knightMoves([0,0], [2,1])
 console.log("graph.root", graph.root);
