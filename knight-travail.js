@@ -99,7 +99,7 @@ class Graph {
     }
 
     knightMoves(value, value1) {
-        this.root = this.reachNode(false, value, value1, [])
+        return this.reachNodes(false, value, value1, [])
     }
 
     //create helper function
@@ -107,8 +107,8 @@ class Graph {
     //- value: first value
     //- value1: value to reach
     //- all: history of precedent value reach by the knight
-    reachNode(find, value, value1, path) {
-        console.log("herre starat tg recusrsion");
+    reachNodes(find, value, value1, path) {
+        //console.log("herre starat tg recusrsion");
         
         //console.log(all);
         //console.log({prev, value});
@@ -145,7 +145,7 @@ class Graph {
             });
             return isIn
         });
-        //console.log(all.map(el => el.join()).join("||"), {arrayOfValuesFilter, arrayOfValues, prev, value});
+        console.log(path.map(el => el.join()).join("||"), {arrayOfValuesFilter, arrayOfValues, find, value});
         
         // push value in the history of value
         if(!path.includes(value)) path.push(value);
@@ -166,13 +166,13 @@ class Graph {
         // now i solve this problem with Array.from(new Set(all1)) the function 
         // seems a infinite loop. i need help to solve the problem
         let root = new Node(value, 
-            arrayOfValuesFilter.length >= 1 && find !== true  ? this.createNode(find, arrayOfValuesFilter[0], value1, all1) : null,
-            arrayOfValuesFilter.length >= 2 && find !== true  ? this.createNode(find, arrayOfValuesFilter[1], value1, all2) : null,
-            arrayOfValuesFilter.length >= 3 && find !== true  ? this.createNode(find, arrayOfValuesFilter[2], value1, all3) : null,
-            arrayOfValuesFilter.length >= 4 && find !== true  ? this.createNode(find, arrayOfValuesFilter[3], value1, all4) : null,
-            arrayOfValuesFilter.length >= 5 && find !== true  ? this.createNode(find, arrayOfValuesFilter[4], value1, all5) : null,
-            arrayOfValuesFilter.length >= 6 && find !== true  ? this.createNode(find, arrayOfValuesFilter[5], value1, all6) : null,
-            arrayOfValuesFilter.length >= 7 && find !== true  ? this.createNode(find, arrayOfValuesFilter[6], value1, all7) : null,
+            (arrayOfValuesFilter.length >= 1 && find !== true) ? this.reachNodes(find, arrayOfValuesFilter[0], value1, all1) : null,
+            (arrayOfValuesFilter.length >= 2 && find !== true) ? this.reachNodes(find, arrayOfValuesFilter[1], value1, all1) : null,
+            (arrayOfValuesFilter.length >= 3 && find !== true) ? this.reachNodes(find, arrayOfValuesFilter[2], value1, all1) : null,
+            (arrayOfValuesFilter.length >= 4 && find !== true) ? this.reachNodes(find, arrayOfValuesFilter[3], value1, all1) : null,
+            (arrayOfValuesFilter.length >= 5 && find !== true) ? this.reachNodes(find, arrayOfValuesFilter[4], value1, all1) : null,
+            (arrayOfValuesFilter.length >= 6 && find !== true) ? this.reachNodes(find, arrayOfValuesFilter[5], value1, all1) : null,
+            (arrayOfValuesFilter.length >= 7 && find !== true) ? this.reachNodes(find, arrayOfValuesFilter[6], value1, all1) : null,
         )
 
         //console.log({all});
@@ -187,8 +187,8 @@ class Graph {
 
 let graph = new Graph()
 
-graph.knightMoves([0,0], [7,7])
+//graph.knightMoves([0,0], [2,1])
 let a = [1,1]
 let b = [1,1]
 console.log(a[0] === b[0] && a[1] === b[1]);
-console.log("graph.root", graph.root);
+console.log("graph.root", graph.knightMoves([0,0], [2,1]));
